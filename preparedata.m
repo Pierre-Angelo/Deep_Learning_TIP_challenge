@@ -1,3 +1,5 @@
+clear all
+
 function [trainData, valData, binaryLabels, imageNames] = loadImageData(imageDir, labelDir, inputSize,numClasses)
     miniBatchSize = 32;
     imageFiles = dir(fullfile(imageDir, '*.jpg'));
