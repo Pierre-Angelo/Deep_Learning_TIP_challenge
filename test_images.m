@@ -21,6 +21,9 @@ for i = 1:5
     scoresImg = predict(trainedNet,single(img))';
     % disp(scoresImg)
     YPred =  categoriesTrain(scoresImg >= thresholdValue) ;
+    if isscalar(YPred)
+        YPred = {YPred};
+    end
 
     [~, imageName, ~] = fileparts(imageFiles(i).name);
     results(imageName) = YPred;
