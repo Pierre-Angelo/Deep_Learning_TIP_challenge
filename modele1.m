@@ -1,6 +1,16 @@
+close all;
 
 %net = imagePretrainedNetwork("resnet50",NumClasses=numClasses);
 net = imagePretrainedNetwork("resnet18",NumClasses=numClasses);
+
+layer = sigmoidLayer('Name', 'sig1');
+
+net = replaceLayer(net,"prob",layer);
+
+analyzeNetwork(net);
+
+% net = freezeNetwork(net,LayerNamesToIgnore="Logits"); % pour mobilenetv2
+net = freezeNetwork(net,LayerNamesToIgnore="fc1000"); % pour resnet18/resnet50
 
 options = trainingOptions("sgdm", ...
     InitialLearnRate=0.01, ...
