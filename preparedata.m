@@ -57,12 +57,14 @@ function [trainData, valData, binaryLabels, imageNames] = loadImageData(imageDir
 
     trainTable = dataTable(trainIndices, :);
     valTable = dataTable(valIndices, :);
+    trainImageStore = imageDatastore(trainTable.File_Location);
+    valImageStore = imageDatastore(valTable.File_Location);
 
-    trainData = augmentedImageDatastore(inputSize(1:2), trainTable, ...
+    trainData = augmentedImageDatastore(inputSize(1:2), trainImageStore, ...
         'ColorPreprocessing', 'gray2rgb');
     trainData.MiniBatchSize = miniBatchSize;
 
-    valData = augmentedImageDatastore(inputSize(1:2), valTable, ...
+    valData = augmentedImageDatastore(inputSize(1:2), valImageStore, ...
         'ColorPreprocessing', 'gray2rgb');
     valData.MiniBatchSize = miniBatchSize;
 end
