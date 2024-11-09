@@ -1,6 +1,6 @@
 clear all
 
-function [trainData, valData, binaryLabels, imageNames] = loadImageData(imageDir, labelDir, inputSize,numClasses)
+function [trainData, valData, binaryLabels, imageNames] = loadImageData(imageDir, labelDir, inputSize,numClasses, maxSamples)
     miniBatchSize = 32;
     imageFiles = dir(fullfile(imageDir, '*.jpg'));
     
@@ -16,7 +16,7 @@ function [trainData, valData, binaryLabels, imageNames] = loadImageData(imageDir
     labelFiles = dir(fullfile(labelDir, '*.cls'));
     labelPaths = fullfile({labelFiles.folder}, {labelFiles.name})';
 
-    numSamples = numel(labelFiles);
+    numSamples = min(numel(labelFiles),maxSamples);
     
     % Pre-allocate arrays
     binaryLabels = zeros(numSamples, numClasses);
@@ -87,5 +87,6 @@ trainImageDir = './images/train-resized';
 trainLabelDir = './labels/train';            
 numClasses = 80;                             
 inputSize = [224, 224, 3];
+maxSamples = 5000; %inf to get all the samples
 
-[trainData, valData, binaryLabels, imageNames] = loadImageData(trainImageDir, trainLabelDir,inputSize,numClasses);
+[trainData, valData, binaryLabels, imageNames] = loadImageData(trainImageDir, trainLabelDir,inputSize,numClasses,maxSamples);
