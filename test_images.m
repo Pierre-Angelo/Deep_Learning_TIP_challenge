@@ -11,12 +11,15 @@ imageNames = string(fullfile(testImageFolder, {imageFiles.name}));
 thresholdValue = 0.5;
 
 figure
-tiledlayout(1,5)
+tiledlayout(1,length(imageFiles))
 results = containers.Map();
 
-for i = 1:5
+for i = 1:length(imageFiles)
     img = imread(imageNames(i));
     img = imresize(img,inputSize(1:2));
+    if isscalar(img(1,1,:))
+        img = cat(3, img, img, img);
+    end
 
     scoresImg = predict(trainedNet,single(img))';
     % disp(scoresImg)
