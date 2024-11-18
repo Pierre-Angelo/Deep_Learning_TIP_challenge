@@ -87,6 +87,6 @@ trainImageDir = './images/train-resized';
 trainLabelDir = './labels/train';            
 numClasses = 80;                             
 inputSize = [224, 224, 3];
-maxSamples = 20000; %inf to get all the samples
+maxSamples = 5000; %inf to get all the samples
 
 [trainData, numTrain, valData, binaryLabels, imageNames] = loadImageData(trainImageDir, trainLabelDir,inputSize,numClasses,maxSamples);
